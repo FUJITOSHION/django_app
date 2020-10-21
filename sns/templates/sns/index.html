@@ -10,14 +10,16 @@
 </head>
 <body class="container">
     <h1 class="display-4 text-primary mb-4">{{title}}</h1>
-    <p class="h5">{{msg}}</p>
-    <form action="{% url 'form' %}" method="post">
+    <p class="h5">{{message | safe}}</p>
+    <form action="{% url 'index' %}" method="post">
         {% csrf_token %}
-            <div class="form-group">
+        {{ form }}
+        <input class="btn btn-primary" type="submit" value="click">
+            <!-- <div class="form-group">
                 <label for="msg">message</label>
                 <input id="msg" type="text" class="form-control" name="msg">
             </div>
-            <input class="btn btn-primary" type="submit" value="click">
+            <input class="btn btn-primary" type="submit" value="click"> -->
     </form>
 </body>
 </html>
