@@ -1,13 +1,7 @@
 from django import forms
+from django.forms.widgets import TextInput
 
 
 class SnsForm(forms.Form):
-    data = [
-        ('one', 'item1'),
-        ('two', 'item2'),
-        ('three', 'item3'),
-    ]
-    check = forms.ChoiceField(label='ratio',choices=data, widget=forms.RadioSelect())
-    # name = forms.CharField(label='name')
-    # mail = forms.CharField(label='mail')
-    # age = forms.IntegerField(label='age')
+    name = forms.CharField(label='Name', widget=forms.TextInput(attrs={'class':'form-contorl'}))
+    mail = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class:':'form-control'}))
