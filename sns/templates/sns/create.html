@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="ja"> 
+<html lang="ja">
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
@@ -9,17 +9,11 @@
     crossorigin="anonymous">
 </head>
 <body class="container">
-    <h1 class="display-4 text-primary mb-4">{{title}}</h1>
-    <table class="table">
-        <tr>
-            <th>data</th>
-        </tr>
-    {% for item in data %}
-        <tr>
-            <td>{{item}}</td>
-            <td><a href="{% url 'edit' item.id %}">Edit</a></td>
-        </tr>
-    {% endfor %}
-    </table>
+    <h1 class="display-4 text-primary">{{title}}</h1>
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="click" class="btn btn-primary mt-2">
+    </form>
 </body>
 </html>

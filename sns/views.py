@@ -1,10 +1,10 @@
 from django.db.models.query import QuerySet
 from django.http import request
 from sns.models import Friend
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse#アクセスに送り返すもの
-from .forms import SnsForm
-from django.views.generic import TemplateView
+from .forms import FriendForm
+# from django.views.generic import TemplateView, generic
 from django.db.models import QuerySet
 
 def __new_str__(self):
@@ -25,3 +25,29 @@ def index(request):
         'data':data,
     }
     return render(request, 'sns/index.html', params)
+
+def create(request):
+    if (request.method == 'POST'):
+        obj = Friend()
+        friend = FriendForm(request.POST, instance=obj)
+        friend.save()
+        return redirect(to='/hello')
+    params = {
+        'title':'Hello',
+        'form':FriendForm(),
+    }
+    return render(request, 'sns/create.html', params)
+
+
+def edit(request, num):
+    obj = Friend.objects.get(id=num)
+    if (request.method == 'POST'):
+        friend = FriendForm(request.POST, instance=obj)
+        friend.save()
+        return redirect(to='/hello')
+    params = {
+        'titile':'Hello',
+        'id':num,
+        'form':FriendForm(instance=obj)
+    }
+    return render(request, 'sns/edit.html', params)
