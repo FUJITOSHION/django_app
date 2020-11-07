@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="ja"> 
+<html lang="ja">
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
@@ -9,18 +9,20 @@
     crossorigin="anonymous">
 </head>
 <body class="container">
-    <h1 class="display-4 text-primary mb-4">{{title}}</h1>
+    <h1 class="display-4 text-primary">Friends List</h1>
     <table class="table">
         <tr>
-            <th>data</th>
+            <th>id</th>
+            <th>name</th>
+            <th></th>
         </tr>
-    {% for item in data %}
+        {% for item in object_list %}
         <tr>
-            <td>{{item}}</td>
-            <td><a href="{% url 'edit' item.id %}">Edit</a></td>
-            <td><a href="{% url 'delete' item.id %}">Delete</a></td>
+            <th>{{item.id}}</th>
+            <td>{{item.name}}</td>
+            <td><a href="/hello/detail/{{item.id}}">detail</a></td>
         </tr>
-    {% endfor %}
+        {% endfor %}
     </table>
 </body>
 </html>

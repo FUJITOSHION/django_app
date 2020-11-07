@@ -4,8 +4,9 @@ from sns.models import Friend
 from django.shortcuts import redirect, render
 from django.http import HttpResponse#アクセスに送り返すもの
 from .forms import FriendForm
-# from django.views.generic import TemplateView, generic
+from django.views.generic import ListView, DetailView
 from django.db.models import QuerySet
+from .forms import FindForm
 
 def __new_str__(self):
     result = ''
@@ -62,3 +63,30 @@ def delete(request, num):
         'id':num,
         'obj':friend,
     }
+    return render(request, 'sns/delete.html', params)
+
+class FriendList(ListView):
+    model = Friend
+
+class FriendDetail(DetailView):
+    model = Friend
+
+def find(request):
+    if (request.method == 'POST'):
+        form = FindForm(request.POST)
+        find = request.POST['find']
+        data = Friend.objects.filter(name__contains=find)
+        msg = 'Result:' + str(data.count())
+
+    else:
+        msg = 'search words ...'
+        form = FindForm()
+        data = Friend.objects.all()
+
+    params = {
+        'title':'Hello',
+        'message':msg,
+        'form':form,
+        'data':data
+    }
+    return render(request, 'sns/find.html', params)
