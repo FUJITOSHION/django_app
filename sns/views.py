@@ -20,7 +20,7 @@ def __new_str__(self):
 QuerySet.__str__ = __new_str__
 
 def index(request):
-    data = Friend.objects.all().values('id','name','age')
+    data = Friend.objects.all().order_by('age').reverse()
     params = {
         'title':'Hello',
         'data':data,
@@ -75,7 +75,8 @@ def find(request):
     if (request.method == 'POST'):
         form = FindForm(request.POST)
         find = request.POST['find']
-        data = Friend.objects.filter(name__contains=find)
+        list = find.split()
+        data = Friend.objects.all()[int(list[0]):int(list[1])]
         msg = 'Result:' + str(data.count())
 
     else:
